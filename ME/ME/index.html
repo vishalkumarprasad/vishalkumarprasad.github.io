@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Managerial Economics · Exam Portal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <style>
+    :root{--bg:#f3f7f7;--card:#fff;--ink:#142523;--muted:#5b6b67;--line:#d4dfdd;--teal:#0e8478}
+    *{box-sizing:border-box} body{margin:0;font:14px/1.5 Inter,system-ui,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at top,#e8faf8,#f3f7f7 42%);color:var(--ink)}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
+    .top{display:flex;flex-wrap:wrap;gap:10px;align-items:end;justify-content:space-between;margin-bottom:14px}
+    .title{font-size:clamp(24px,3vw,38px);font-weight:800;line-height:1.05;margin:4px 0}
+    .sub{color:var(--muted)}
+    .pill{display:inline-block;border:1px solid #bde1dd;background:#ecf9f7;color:#0f7268;border-radius:999px;padding:5px 10px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase}
+    .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:16px}
+    .side{padding:14px;position:sticky;top:12px;max-height:calc(100dvh - 24px);overflow:auto}
+    .main{padding:16px}
+    select{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;font-weight:600}
+    .qidx{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:10px}
+    .qbtn{border:1px solid var(--line);background:#f9fbfb;border-radius:8px;padding:7px 0;text-align:center;font-size:12px;font-weight:700;color:var(--muted);text-decoration:none}
+    .qbtn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--ink);text-decoration:none}
+    .btn.next{background:var(--teal);border-color:var(--teal);color:#fff}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+    .tag{border:1px solid var(--line);background:#f7fbfa;color:var(--muted);border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700}
+    .bar{height:8px;background:#edf3f2;border-radius:999px;overflow:hidden;margin-top:8px}
+    .bar > div{height:100%;background:var(--teal)}
+    .prose h1,.prose h2,.prose h3,.prose h4{margin:.8rem 0 .4rem;font-size:1rem}
+    .prose p{margin:.45rem 0} .prose ul,.prose ol{padding-left:1.15rem} .prose table{display:block;overflow:auto;border-collapse:collapse}
+    .prose td,.prose th{border:1px solid var(--line);padding:4px 8px}
+    .prose pre{background:#f4f7f7;padding:10px;border-radius:10px;overflow:auto}
+    .prose blockquote{border-left:3px solid var(--line);margin:.65rem 0;padding-left:.7rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <span class="pill">Exam Portal</span>
+        <h1 class="title">Managerial Economics</h1>
+        <div class="sub" id="overall"></div>
+      </div>
+    </div>
+    <div class="grid">
+      <aside class="panel side">
+        <div style="font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Paper</div>
+        <select id="paper"></select>
+        <div style="margin-top:10px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Progress</div>
+        <div id="progressText" class="sub" style="margin-top:4px"></div>
+        <div class="bar"><div id="barFill" style="width:0%"></div></div>
+        <div style="margin-top:12px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Question Index</div>
+        <div class="qidx" id="index"></div>
+      </aside>
+      <main class="panel main">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+          <div>
+            <div id="paperMeta" class="sub"></div>
+            <h2 id="qTitle" style="margin:4px 0 0;font-size:28px;line-height:1.05"></h2>
+            <div class="meta" id="qTags"></div>
+          </div>
+          <div class="actions">
+            <a id="prevBtn" class="btn" href="#">← Previous</a>
+            <a id="nextBtn" class="btn next" href="#">Next →</a>
+          </div>
+        </div>
+        <article id="content" class="prose" style="margin-top:12px"></article>
+      </main>
+    </div>
+  </div>
+<script>
+const state = { data:null, p:0, q:0 };
+const $ = (id)=>document.getElementById(id);
+const paperSel = $("paper"), idxWrap = $("index"), content = $("content");
+const qTitle = $("qTitle"), qTags = $("qTags"), paperMeta = $("paperMeta"), overall = $("overall");
+const prevBtn = $("prevBtn"), nextBtn = $("nextBtn"), progressText = $("progressText"), barFill = $("barFill");
+
+function parseHash(){
+  const h = new URLSearchParams(location.search);
+  return { p: Number.parseInt(h.get("p") || "1", 10)-1, q: Number.parseInt(h.get("q") || "1", 10)-1 };
+}
+function syncUrl(){
+  const url = new URL(location.href);
+  url.searchParams.set("p", String(state.p + 1));
+  url.searchParams.set("q", String(state.q + 1));
+  history.replaceState({}, "", url);
+}
+function clamp(){
+  if(!state.data.papers.length){state.p=0;state.q=0;return;}
+  state.p = Math.max(0, Math.min(state.p, state.data.papers.length - 1));
+  const qs = state.data.papers[state.p].questions;
+  state.q = Math.max(0, Math.min(state.q, Math.max(0, qs.length - 1)));
+}
+function renderPapers(){
+  paperSel.innerHTML = state.data.papers.map((p,i)=>
+    '<option value="'+i+'">'+p.term+' · '+p.exam+' · '+p.questionCount+' Q</option>'
+  ).join("");
+  paperSel.value = String(state.p);
+}
+function renderIndex(){
+  const paper = state.data.papers[state.p];
+  idxWrap.innerHTML = paper.questions.map((x,i)=>{
+    const active = i===state.q ? " active" : "";
+    return '<a class="qbtn'+active+'" href="?p='+(state.p+1)+'&q='+(i+1)+'">Q'+x.number+'</a>';
+  }).join("");
+}
+function renderQuestion(){
+  const paper = state.data.papers[state.p];
+  const item = paper.questions[state.q];
+  overall.textContent = state.data.paperCount + " papers · " + state.data.totalQuestions + " questions";
+  paperMeta.textContent = paper.title + " · " + paper.term + " · " + paper.exam;
+  qTitle.textContent = "Question " + item.number;
+  const tags = [item.kind, item.marks].filter(Boolean).map(t => '<span class="tag">'+t+'</span>').join("");
+  qTags.innerHTML = tags;
+  content.innerHTML = item.html;
+
+  const total = paper.questions.length;
+  const num = state.q + 1;
+  progressText.textContent = num + " / " + total;
+  barFill.style.width = Math.round((num / total) * 100) + "%";
+
+  if (num > 1) {
+    prevBtn.href = '?p='+(state.p+1)+'&q='+(num-1);
+    prevBtn.style.pointerEvents = "";
+    prevBtn.style.opacity = "1";
+  } else {
+    prevBtn.href = '#';
+    prevBtn.style.pointerEvents = "none";
+    prevBtn.style.opacity = ".5";
+  }
+  if (num < total) {
+    nextBtn.textContent = "Next →";
+    nextBtn.href = '?p='+(state.p+1)+'&q='+(num+1);
+    nextBtn.style.pointerEvents = "";
+    nextBtn.style.opacity = "1";
+  } else {
+    nextBtn.textContent = "Paper complete";
+    nextBtn.href = '#';
+    nextBtn.style.pointerEvents = "none";
+    nextBtn.style.opacity = ".8";
+  }
+}
+function render(){
+  clamp();
+  renderPapers();
+  renderIndex();
+  renderQuestion();
+  syncUrl();
+}
+
+paperSel.addEventListener("change", (e)=>{
+  state.p = Number.parseInt(e.target.value, 10) || 0;
+  state.q = 0;
+  render();
+});
+
+fetch("./data.json").then(r=>r.json()).then(data=>{
+  state.data = data;
+  const fromUrl = parseHash();
+  state.p = Number.isFinite(fromUrl.p) ? fromUrl.p : 0;
+  state.q = Number.isFinite(fromUrl.q) ? fromUrl.q : 0;
+  render();
+});
+</script>
+</body>
+</html>
