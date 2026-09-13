@@ -1,169 +1,872 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Managerial Economics · Exam Portal</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-  <style>
-    :root{--bg:#f3f7f7;--card:#fff;--ink:#142523;--muted:#5b6b67;--line:#d4dfdd;--teal:#0e8478}
-    *{box-sizing:border-box} body{margin:0;font:14px/1.5 Inter,system-ui,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at top,#e8faf8,#f3f7f7 42%);color:var(--ink)}
-    .wrap{max-width:1200px;margin:0 auto;padding:18px}
-    .top{display:flex;flex-wrap:wrap;gap:10px;align-items:end;justify-content:space-between;margin-bottom:14px}
-    .title{font-size:clamp(24px,3vw,38px);font-weight:800;line-height:1.05;margin:4px 0}
-    .sub{color:var(--muted)}
-    .pill{display:inline-block;border:1px solid #bde1dd;background:#ecf9f7;color:#0f7268;border-radius:999px;padding:5px 10px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase}
-    .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}}
-    .panel{background:var(--card);border:1px solid var(--line);border-radius:16px}
-    .side{padding:14px;position:sticky;top:12px;max-height:calc(100dvh - 24px);overflow:auto}
-    .main{padding:16px}
-    select{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;font-weight:600}
-    .qidx{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:10px}
-    .qbtn{border:1px solid var(--line);background:#f9fbfb;border-radius:8px;padding:7px 0;text-align:center;font-size:12px;font-weight:700;color:var(--muted);text-decoration:none}
-    .qbtn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--ink);text-decoration:none}
-    .btn.next{background:var(--teal);border-color:var(--teal);color:#fff}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-    .tag{border:1px solid var(--line);background:#f7fbfa;color:var(--muted);border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700}
-    .bar{height:8px;background:#edf3f2;border-radius:999px;overflow:hidden;margin-top:8px}
-    .bar > div{height:100%;background:var(--teal)}
-    .prose h1,.prose h2,.prose h3,.prose h4{margin:.8rem 0 .4rem;font-size:1rem}
-    .prose p{margin:.45rem 0} .prose ul,.prose ol{padding-left:1.15rem} .prose table{display:block;overflow:auto;border-collapse:collapse}
-    .prose td,.prose th{border:1px solid var(--line);padding:4px 8px}
-    .prose pre{background:#f4f7f7;padding:10px;border-radius:10px;overflow:auto}
-    .prose blockquote{border-left:3px solid var(--line);margin:.65rem 0;padding-left:.7rem;color:var(--muted)}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLOps Question Bank — Plain-English Explanations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF1EC;
+    --surface:#FFFFFF;
+    --ink:#1C2321;
+    --muted:#5D685F;
+    --border:#DCE2DA;
+    --accent:#2F6F5E;
+    --accent-soft:#E4EEE9;
+    --amber:#B4712B;
+    --amber-soft:#F7ECDD;
+    --wrong:#B14B4B;
+    --wrong-soft:#F8ECEC;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent-soft);}
+
+  .app{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    background:#FBFBF9;
+    border-right:1px solid var(--border);
+    padding:28px 0 40px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar-head{
+    padding:0 22px 20px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:10px;
+  }
+  .sidebar-head .kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--accent);
+    letter-spacing:0.03em;
+  }
+  .sidebar-head h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:21px;
+    margin:6px 0 8px;
+    line-height:1.25;
+  }
+  .sidebar-head p{
+    margin:0;
+    font-size:13.5px;
+    color:var(--muted);
+  }
+  .qlist{
+    list-style:none;
+    margin:0;
+    padding:10px 12px;
+  }
+  .qlist li{margin-bottom:3px;}
+  .qbtn{
+    width:100%;
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    text-align:left;
+    background:none;
+    border:none;
+    border-radius:8px;
+    padding:9px 10px;
+    cursor:pointer;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+  }
+  .qbtn:hover{background:var(--accent-soft);}
+  .qbtn.active{background:var(--accent);color:#fff;}
+  .qbtn .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+    flex-shrink:0;
+    padding-top:1px;
+    min-width:28px;
+  }
+  .qbtn.active .num{color:rgba(255,255,255,0.75);}
+  .qbtn .meta{display:flex;flex-direction:column;gap:2px;}
+  .qbtn .topic{font-size:13.5px;font-weight:500;}
+  .qbtn .type{
+    font-size:11px;
+    color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .qbtn.active .type{color:rgba(255,255,255,0.7);}
+
+  /* ---------- Main ---------- */
+  main{
+    padding:48px clamp(24px,5vw,72px) 80px;
+    max-width:880px;
+  }
+  .top-tags{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:99px;
+    border:1px solid var(--border);
+    color:var(--muted);
+  }
+  .tag.strong{
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
+  }
+  h2.qtitle{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:26px;
+    line-height:1.3;
+    margin:0 0 6px;
+  }
+  .prompt{
+    font-size:16.5px;
+    color:var(--ink);
+    white-space:pre-line;
+    margin:14px 0 26px;
+  }
+  .prompt code, .yaml{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13.5px;
+    background:#F1F3EF;
+    border:1px solid var(--border);
+    border-radius:8px;
+    display:block;
+    padding:14px 16px;
+    white-space:pre;
+    overflow-x:auto;
+    color:#333;
+    margin:14px 0;
+  }
+
+  .options{
+    list-style:none;
+    margin:0 0 32px;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .opt{
+    border:1px solid var(--border);
+    background:var(--surface);
+    border-radius:var(--radius);
+    padding:12px 14px;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:15px;
+  }
+  .opt.correct{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+  }
+  .opt .mark{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    margin-top:1px;
+    border:1.5px solid var(--border);
+    color:transparent;
+  }
+  .opt.correct .mark{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+
+  .panel{
+    border-radius:var(--radius);
+    padding:20px 22px;
+    margin-bottom:20px;
+    border:1px solid var(--border);
+  }
+  .panel h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:15px;
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .panel.simple{
+    background:var(--amber-soft);
+    border-color:#E6D2AE;
+  }
+  .panel.simple h3{color:var(--amber);}
+  .panel.simple p{margin:0 0 10px;font-size:15px;}
+  .panel.simple p:last-child{margin-bottom:0;}
+
+  .panel.why h3{color:var(--muted);}
+  .panel.why{background:var(--surface);}
+  .why-item{
+    display:flex;
+    gap:10px;
+    padding:9px 0;
+    border-top:1px solid var(--border);
+    font-size:14.5px;
+  }
+  .why-item:first-of-type{border-top:none;padding-top:2px;}
+  .why-item .dot{
+    flex-shrink:0;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    margin-top:6px;
+  }
+  .why-item.good .dot{background:var(--accent);}
+  .why-item.bad .dot{background:var(--wrong);}
+  .why-item b{font-weight:600;}
+
+  .marks-line{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:4px;
+  }
+
+  .nav{
+    display:flex;
+    justify-content:space-between;
+    margin-top:36px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+  }
+  .nav.nav-top{
+    margin-top:0;
+    padding-top:0;
+    border-top:none;
+    margin-bottom:28px;
+  }
+  .navbtn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .navbtn:hover{border-color:var(--accent);color:var(--accent);}
+  .navbtn:disabled{opacity:0.35;cursor:not-allowed;}
+  .navbtn:disabled:hover{border-color:var(--border);color:var(--ink);}
+  .navbtn.reveal{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+    margin-bottom:28px;
+    width:100%;
+    justify-content:center;
+    padding:13px 16px;
+    font-size:14.5px;
+  }
+  .navbtn.reveal:hover{
+    background:#265E4F;
+    border-color:#265E4F;
+    color:#fff;
+  }
+
+  /* mobile */
+  .menu-toggle{display:none;}
+  @media (max-width: 860px){
+    .app{grid-template-columns:1fr;}
+    .sidebar{
+      position:relative;
+      height:auto;
+      max-height:none;
+      border-right:none;
+      border-bottom:1px solid var(--border);
+      display:none;
+    }
+    .sidebar.open{display:block;}
+    .menu-toggle{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:20px 24px 0;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:10px 14px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12.5px;
+      color:var(--ink);
+      cursor:pointer;
+      width:calc(100% - 48px);
+    }
+    main{padding:20px 22px 60px;}
+  }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <span class="pill">Exam Portal</span>
-        <h1 class="title">Managerial Economics</h1>
-        <div class="sub" id="overall"></div>
-      </div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="kicker">DEGREE LEVEL · MLOPS</div>
+      <h1>Question Bank</h1>
+      <p>21 questions from the MLOps exam section, each unpacked in plain English. Pick one to start.</p>
     </div>
-    <div class="grid">
-      <aside class="panel side">
-        <div style="font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Paper</div>
-        <select id="paper"></select>
-        <div style="margin-top:10px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Progress</div>
-        <div id="progressText" class="sub" style="margin-top:4px"></div>
-        <div class="bar"><div id="barFill" style="width:0%"></div></div>
-        <div style="margin-top:12px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Question Index</div>
-        <div class="qidx" id="index"></div>
-      </aside>
-      <main class="panel main">
-        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-          <div>
-            <div id="paperMeta" class="sub"></div>
-            <h2 id="qTitle" style="margin:4px 0 0;font-size:28px;line-height:1.05"></h2>
-            <div class="meta" id="qTags"></div>
-          </div>
-          <div class="actions">
-            <a id="prevBtn" class="btn" href="#">← Previous</a>
-            <a id="nextBtn" class="btn next" href="#">Next →</a>
-          </div>
-        </div>
-        <article id="content" class="prose" style="margin-top:12px"></article>
-      </main>
-    </div>
-  </div>
+    <ul class="qlist" id="qlist"></ul>
+  </aside>
+
+  <main>
+    <button class="menu-toggle" id="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ Browse all 23 questions</button>
+    <div id="content"></div>
+  </main>
+</div>
+
 <script>
-const state = { data:null, p:0, q:0 };
-const $ = (id)=>document.getElementById(id);
-const paperSel = $("paper"), idxWrap = $("index"), content = $("content");
-const qTitle = $("qTitle"), qTags = $("qTags"), paperMeta = $("paperMeta"), overall = $("overall");
-const prevBtn = $("prevBtn"), nextBtn = $("nextBtn"), progressText = $("progressText"), barFill = $("barFill");
+const DATA = [
+{
+  num:164, marks:2, type:"MCQ", topic:"MLOps vs DevOps scope",
+  question:"Which of the following steps in the data science lifecycle do not require MLOps to manage but DevOps suffices?",
+  options:[
+    {t:"Bias detection", c:false},
+    {t:"Model training & selection", c:false},
+    {t:"Feature engineering", c:true},
+    {t:"Champion and challenger model evaluation and promotion", c:false},
+    {t:"Label drift detection", c:false},
+  ],
+  simple:"MLOps exists for the parts of the job that are unique to machine learning — is the model fair, is it still accurate, should we swap in a better one. Feature engineering — cleaning and transforming columns of data into inputs a model can use — is really just a data pipeline job. Regular DevOps practices (version control, automated pipelines, testing) can handle that fine, without any ML-specific tooling.",
+  why:[
+    {good:false, t:"Bias detection needs ML-aware tooling to check fairness across groups — a DevOps pipeline has no concept of 'fairness'."},
+    {good:false, t:"Choosing and training models is the core ML activity MLOps was built to manage."},
+    {good:true, t:"Feature engineering is data transformation — the same kind of work DevOps/data-engineering pipelines already handle well."},
+    {good:false, t:"Comparing a new 'challenger' model against the current 'champion' before promoting it is an ML-specific governance step."},
+    {good:false, t:"Detecting drift in labels over time requires monitoring model-relevant statistics, not just running code."},
+  ]
+},
+{
+  num:165, marks:2, type:"MCQ", topic:"ML governance",
+  question:"In what way can effective governance of ML systems be realized beyond just accuracy measurement?",
+  options:[
+    {t:"Monitoring, Observability, Response", c:false},
+    {t:"Continuous integration, Continuous Delivery, Operations", c:false},
+    {t:"Logging, Tracing, Metrics Collection", c:false},
+    {t:"Bias detection, Drift monitoring & Explainability", c:true},
+    {t:"Regulatory risk, Reputational harm & Change management.", c:false},
+  ],
+  simple:"A model can score 95% accuracy on paper and still be a problem in the real world — maybe it treats certain groups unfairly, maybe the world has quietly changed underneath it, or maybe nobody can explain why it made a decision. Governance means checking for exactly those three things: unfair bias, drift away from reality, and the ability to explain the model's reasoning.",
+  why:[
+    {good:false, t:"Monitoring/Observability/Response describes running infrastructure reliably — useful, but not specific to governing a model's fairness or trustworthiness."},
+    {good:false, t:"CI/CD/Operations is about shipping software reliably, not about judging whether a model's decisions are trustworthy."},
+    {good:false, t:"Logging/Tracing/Metrics are the raw ingredients for observability, not governance concepts themselves."},
+    {good:true, t:"Bias, drift, and explainability are precisely the things accuracy alone doesn't tell you about a model."},
+    {good:false, t:"These are real consequences of poor governance, but they're outcomes to avoid, not the mechanisms you put in place."},
+  ]
+},
+{
+  num:166, marks:2, type:"MCQ", topic:"Production operations",
+  question:"Which of the following captures the 3 pillars of production operations?",
+  options:[
+    {t:"Monitoring, Observability, Response", c:true},
+    {t:"Detect, Understand, Act", c:false},
+    {t:"CI, CD, MLSecOps", c:false},
+    {t:"Explainability, Drift Monitoring, Bias Detection", c:false},
+    {t:"Infrastructure, Software, Configuration", c:false},
+  ],
+  simple:"Running anything in production is like being on call: you keep an eye on dashboards (Monitoring), you can dig deep to understand why something broke (Observability), and you have a plan to actually fix it (Response). Those three together are the backbone of keeping a live system healthy.",
+  why:[
+    {good:true, t:"These are the textbook three pillars — watch, understand, act — applied specifically to running systems in production."},
+    {good:false, t:"Similar idea in spirit, but it's not the standard named terminology used for this."},
+    {good:false, t:"CI/CD is about shipping code changes, and MLSecOps is about security — neither is about day-to-day production operations."},
+    {good:false, t:"These are governance concerns (fairness, staleness), not the operational pillars for keeping a system running."},
+    {good:false, t:"These describe the layers of a tech stack, not the operational practices applied to it."},
+  ]
+},
+{
+  num:167, marks:2, type:"MCQ", topic:"Data sources",
+  question:"Which of the below is not an example of a software-driven data source?",
+  options:[
+    {t:"OLTP database that serves as the backend to a PHP application", c:false},
+    {t:"OpenAI-hosted URL endpoint that serves your custom-trained GPT", c:false},
+    {t:"Logs from containers", c:false},
+    {t:"Docker manifest file", c:true},
+    {t:"CML report in a Github repo", c:false},
+  ],
+  simple:"A 'software-driven data source' is something that produces or holds live data because software is actually running and doing work — a database being written to, an API being called, logs being generated. A Docker manifest file is just a static description of what's inside a container image (which files, which layers). Nothing is 'happening' when you read it — it's paperwork, not a data feed.",
+  why:[
+    {good:false, t:"A live database backing an app is constantly being read from and written to — a genuine data source."},
+    {good:false, t:"An API endpoint being queried produces request/response data continuously — that counts as software-driven."},
+    {good:false, t:"Container logs are generated as the software runs — a classic operational data source."},
+    {good:true, t:"A manifest file just describes an image; it doesn't get generated by running software the way logs or database rows do."},
+    {good:false, t:"A CML report is generated by a pipeline run — it's an output produced by software executing."},
+  ]
+},
+{
+  num:168, marks:2, type:"MCQ", topic:"When LLMs are the wrong tool",
+  question:"For which of the following use cases is an LLM NOT well suited?",
+  options:[
+    {t:"Reasoning about macroeconomic implications of a country's finance policy.", c:false},
+    {t:"Answering targeted questions about features of a washing machine from its user manual.", c:false},
+    {t:"Performing rule-driven classification of scanned images into ID proof / address proof categories.", c:false},
+    {t:"Incorporating dynamic learning about customer preferences for customer servicing.", c:false},
+    {t:"Building a \"risky driving\" alerting system using telematics data from trucks (location, movement, driving behaviour, vehicle health sensors).", c:true},
+  ],
+  simple:"LLMs are language specialists — they're good at reading, writing, reasoning over text, and answering questions from documents. Detecting risky driving from raw sensor streams (GPS coordinates, accelerometer readings, engine data) is a numeric time-series pattern-recognition problem. That calls for a model built for sensor data, not a language model.",
+  why:[
+    {good:false, t:"Reasoning through the implications of a policy is a language-and-reasoning task — right in an LLM's wheelhouse."},
+    {good:false, t:"Answering questions from a manual is classic retrieval-augmented question answering — a strong LLM use case."},
+    {good:false, t:"Classifying scanned documents by type is text/image-and-language adjacent and LLMs (especially multimodal ones) handle this well."},
+    {good:false, t:"Learning and adapting to customer preferences via conversation is a natural fit for LLM-based assistants."},
+    {good:true, t:"This is a sensor/time-series problem with no natural language involved — a purpose-built model on telematics data will do far better."},
+  ]
+},
+{
+  num:169, marks:2, type:"MCQ", topic:"Feast feature store design",
+  question:"The data schema comprises a Fact table (PurchaseEvent) recording purchases via various channels, plus Dimension tables for Customer, Channel, and Product. How would you design the Feast data model to support ML development?",
+  options:[
+    {t:"Every Dimension table is a Feast entity. The PurchaseEvent Fact table becomes a FeatureView.", c:false},
+    {t:"The PurchaseEvent Fact table becomes a Feast entity. Each Dimension table is a FeatureView with the Fact entity linked to it.", c:false},
+    {t:"The PurchaseEvent Fact table needs to be processed further to create useful features (e.g. aggregations over purchase events). That processed table becomes a FeatureView. Every Dimension table is a Feast entity linked to that FeatureView.", c:true},
+    {t:"Join the Fact and Dimension tables into one large denormalized table, summarize it into features, and make this the FeatureView with no entity specified.", c:false},
+  ],
+  simple:"In Feast, an 'entity' is a real-world thing you want to know something about — a customer, a channel, a product. A 'FeatureView' is a set of computed features about those entities. Raw purchase transactions aren't features yet — you first need to summarize them (like 'purchases in the last 30 days'). So: crunch the raw purchase events into useful numbers first (that becomes the FeatureView), and connect it to the entities — customer, channel, product — it describes.",
+  why:[
+    {good:false, t:"This treats the raw, un-aggregated purchase log as a FeatureView, but raw transactions aren't useful model inputs on their own."},
+    {good:false, t:"This flips entities and feature views the wrong way round — customers/channels/products are the entities, not the purchase log."},
+    {good:true, t:"Aggregating the fact table into real features, then linking every relevant dimension as an entity, is exactly how Feast is meant to be used."},
+    {good:false, t:"Denormalizing everything into one giant table throws away the whole point of entities — you lose the ability to reuse features per entity across models."},
+  ]
+},
+{
+  num:170, marks:2, type:"MSQ", topic:"Git fundamentals",
+  question:"Which of the following statements regarding git are true?",
+  options:[
+    {t:"\"git checkout -b branch\" will not work if the branch does not exist.", c:false},
+    {t:"A pull request is used to merge 2 branches", c:true},
+    {t:"On \"git commit\", all collaborators in the repo can see the changes immediately.", c:false},
+    {t:"\"git push origin feature/my-cool-idea\" pushes code from the local branch \"feature/my-cool-idea\" to the local branch \"origin\".", c:false},
+    {t:"On \"git pull\", all changes in the current branch are downloaded from remote.", c:true},
+  ],
+  simple:"A pull request is literally a formal request to merge one branch into another, reviewed before it happens. 'git pull' brings down whatever's new on the remote version of your current branch and merges it in. Everything else in this list mixes up local vs remote or misunderstands what a command does.",
+  why:[
+    {good:false, t:"'-b' actually means create the branch — it's designed to work precisely when the branch doesn't exist yet."},
+    {good:true, t:"That's the whole purpose of a pull request: propose and review a merge between two branches."},
+    {good:false, t:"A commit only changes your local repository — nobody else sees it until you push it somewhere shared."},
+    {good:false, t:"\"origin\" here is just the name of the remote repository, not a branch — the command pushes your local branch to a same-named branch on that remote."},
+    {good:true, t:"'git pull' is shorthand for fetch + merge, bringing the remote's version of your current branch down and combining it."},
+  ]
+},
+{
+  num:171, marks:2, type:"MSQ", topic:"Scope of MLOps",
+  question:"Which of the below are part of what MLOps manages?",
+  options:[
+    {t:"ML models", c:true},
+    {t:"Not the actual LLM itself since that is large and proprietary, only its architecture", c:false},
+    {t:"Data engineering code", c:true},
+    {t:"Only small data since big data isn't effectively managed via versioning systems", c:false},
+    {t:"k8s (Kubernetes) configuration files", c:true},
+  ],
+  simple:"MLOps is broad — it covers the models themselves, the code that prepares data for them, and the infrastructure config used to serve them. It doesn't shrink away from big proprietary models or big data; with the right tooling (model registries, data versioning tools built for scale), all of it is manageable.",
+  why:[
+    {good:true, t:"Models are the central artifact MLOps exists to version, deploy, and monitor."},
+    {good:false, t:"You still need to track and manage the deployed model artifact itself, not just its architecture — size and ownership don't exempt it."},
+    {good:true, t:"The code that builds features and prepares data is squarely inside MLOps's remit."},
+    {good:false, t:"Big data absolutely can be versioned and managed (with tools designed for scale) — it's not limited to 'only small data'."},
+    {good:true, t:"Infrastructure-as-config files, like k8s manifests, are part of what needs to be tracked and managed for reliable deployment."},
+  ]
+},
+{
+  num:172, marks:2, type:"MSQ", topic:"Security attacks on ML systems",
+  question:"Which of the below definitions of security attacks on ML systems are correct?",
+  options:[
+    {t:"Identifying which patient's data has been used in a heart attack prediction model is an example of membership inference attack.", c:true},
+    {t:"Cloning a live API and stealing away live traffic is an example of man-in-the-middle attack.", c:false},
+    {t:"Fooling a vehicle by making it understand red signals as orange is an example of evasion attack.", c:true},
+    {t:"Figuring out which facial patterns are known to cause a positive match in a criminal matching system is an example of inversion attack.", c:true},
+    {t:"Feeding wrong data samples is an example of enrichment attack.", c:false},
+  ],
+  simple:"Three real attack types show up correctly here: figuring out whether someone's data was used to train a model (membership inference), tricking a live model with a doctored input so it misreads it (evasion), and reverse-engineering what patterns the model 'likes' to reveal sensitive information (inversion). The other two options misname their attacks — cloning an API to steal its traffic is closer to theft/impersonation, and feeding it wrong data on purpose is data poisoning, not an 'enrichment attack' (which isn't a standard security term here).",
+  why:[
+    {good:true, t:"Membership inference is exactly this — determining if a specific record was part of the training data, which can leak private information."},
+    {good:false, t:"A man-in-the-middle attack means secretly intercepting communication between two parties — cloning an API to redirect traffic is a different kind of theft/impersonation attack."},
+    {good:true, t:"Evasion attacks manipulate an input just enough to fool the model at inference time — a textbook example is making a stop sign read as something else."},
+    {good:true, t:"Model inversion reconstructs sensitive input patterns (like facial features) that trigger a certain output — a genuine privacy risk."},
+    {good:false, t:"Deliberately feeding bad data to corrupt a model is data poisoning, not an 'enrichment attack' — that label doesn't describe a real recognized attack type."},
+  ]
+},
+{
+  num:173, marks:2, type:"MSQ", topic:"Model deployment (Docker & k8s)",
+  question:"Which of the following statements regarding model deployment are true?",
+  options:[
+    {t:"Once a Docker image is created, the Dockerfile is no longer required to deploy the image.", c:true},
+    {t:"The Registry allows for having independent development machines where Docker images are created, separate from a common container execution environment like k8s.", c:true},
+    {t:"The annotation '@app.post(\"/predict\")' tells FastAPI that this app can receive all HTTP request types for the endpoint \"/predict\".", c:false},
+    {t:"A K8s cluster takes time to spin up because containers are heavyweight and take time to deploy on host machines.", c:false},
+    {t:"A custom web service using FastAPI is better than a k8s cluster of containers only for fast iterations on development and testing.", c:true},
+    {t:"A pod is the smallest unit of deployment in k8s, and comprises of one or more containers.", c:true},
+    {t:"The benefits of k8s over using plain Docker are ability to scale and have easier management of containers", c:true},
+  ],
+  simple:"A Dockerfile is just the recipe — once you've baked the image, you can ship and run that image anywhere without needing the recipe again. A container registry is the shared shelf that lets developers build images on their own machines and hand them off to wherever they're actually run, like a k8s cluster. FastAPI's '@app.post' only listens for POST requests, not every HTTP verb — that's a common misconception. And a plain FastAPI service is genuinely handy for quick dev/testing, but k8s earns its keep in production because it scales and manages many containers for you (and containers are lightweight, not slow to spin up — that's the whole point of using them over VMs).",
+  why:[
+    {good:true, t:"The Dockerfile's job ends once it produces the image — you deploy and run the resulting image, not the recipe."},
+    {good:true, t:"A registry decouples 'where images get built' from 'where images get run', which is exactly why teams use one."},
+    {good:false, t:"'@app.post' registers a route only for POST requests — a different decorator (or method) is needed for GET, PUT, etc."},
+    {good:false, t:"Containers are lightweight and start quickly by design — that's precisely what makes them faster than VMs, not slower."},
+    {good:true, t:"For quick local iteration, a simple FastAPI service avoids the overhead of a full cluster — but that convenience doesn't scale to production."},
+    {good:true, t:"A pod is indeed the smallest deployable unit in Kubernetes, and it can bundle one or more tightly-coupled containers."},
+    {good:true, t:"Scaling automatically and managing many containers reliably is exactly what k8s adds on top of plain Docker."},
+  ]
+},
+{
+  num:174, marks:3, type:"MSQ", topic:"LLMOps vs MLOps complexity",
+  question:"A candidate negotiating for higher pay claims LLMOps is significantly more complex than MLOps. As the hiring manager, which arguments would you use to counter that?",
+  options:[
+    {t:"Source data provenance and lineage tracking is the same effort for any type of model.", c:true},
+    {t:"Accuracy testing is the same for any type of model.", c:false},
+    {t:"Securing the model requires a similar level of work and tooling.", c:false},
+    {t:"Monitoring and responding requires the same level of hands-on expertise and time across any model type.", c:true},
+    {t:"Cost analysis and optimizations to be carried out are similar.", c:false},
+    {t:"Team collaboration and end-to-end ownership has similar responsibilities, doesn't matter the model type.", c:true},
+  ],
+  simple:"Some MLOps disciplines really don't change much just because the model is an LLM — tracking where your data came from, keeping an eye on things in production, and how a team shares ownership of a system are roughly the same regardless of model type. But other things genuinely do get harder with LLMs: judging 'accuracy' for open-ended text is fuzzier, securing a huge model (prompt injection, jailbreaks) is a different beast, and the cost profile (expensive token-based API calls) needs its own kind of scrutiny. So a fair counter-argument only uses the parts that are truly similar.",
+  why:[
+    {good:true, t:"Tracking where data came from and how it flowed through your systems is largely the same bookkeeping regardless of model type."},
+    {good:false, t:"Accuracy is genuinely harder to define and measure for open-ended LLM outputs than for a classic classifier — this isn't a fair 'same effort' argument."},
+    {good:false, t:"LLMs face unique security concerns (prompt injection, jailbreaking) that classic ML models don't — securing them is not equivalent work."},
+    {good:true, t:"Watching dashboards and responding to incidents takes a comparable level of operational skill whatever the model type."},
+    {good:false, t:"LLM costs (token-based API pricing, GPU inference) behave very differently from a small classical model, so cost analysis genuinely differs."},
+    {good:true, t:"Who owns what and how the team collaborates end-to-end doesn't fundamentally change with the model type."},
+  ]
+},
+{
+  num:175, marks:3, type:"MSQ", topic:"Controlling LLM API costs",
+  question:"A SaaS product's cost per dollar of sales has stayed flat despite exponential revenue growth, driven by OpenAI spend. As Chief Product Officer, which mechanisms can you put in place within 1 month to break the linear cost-to-revenue relationship by end of quarter?",
+  options:[
+    {t:"Instrument tracing and metrics collection to understand the GPT usage in detail.", c:true},
+    {t:"Introduce product analytics in every module, find features that are least used but heavy on GPT, and weed these features out.", c:false},
+    {t:"Build custom replacements for all GPT usage using DeepSeek by leveraging distillation.", c:false},
+    {t:"Use self-hosted GPU hardware for the OpenAI usage to save on GPU costs.", c:false},
+    {t:"Identify repeat GPT querying patterns and introduce caching for such query-response pairs.", c:true},
+    {t:"Build quantized custom equivalents of GPT for simpler LLM usage using open source base models from LLaMa or DeepSeek.", c:true},
+  ],
+  simple:"With only a month, you want fast, surgical fixes: first see exactly where the money is going (tracing/metrics), then stop paying twice for the same answer (cache repeated queries), and swap out the simplest, most repetitive tasks for a smaller open-source model you control instead of an expensive general-purpose API. Replacing everything with a distilled model, or trying to run OpenAI's own models on your own hardware (you can't — OpenAI hosts and controls that), or a slow feature-by-feature audit are either impossible or too slow for a one-month, one-quarter deadline.",
+  why:[
+    {good:true, t:"You can't fix what you can't see — detailed tracing tells you which calls are driving the spend, which is the necessary first step."},
+    {good:false, t:"This is a reasonable long-term product strategy, but a full cross-module analytics rollout and feature-by-feature audit is too slow to show results this quarter."},
+    {good:false, t:"Rebuilding 'all' GPT usage via distillation in a month is unrealistic in scope — it's a multi-quarter undertaking, not a quick fix."},
+    {good:false, t:"You don't control OpenAI's infrastructure — self-hosting GPUs doesn't reduce the cost of calling their hosted API."},
+    {good:true, t:"Caching identical or near-identical queries avoids paying for the same generation twice — a fast, high-leverage win."},
+    {good:true, t:"Routing simpler, well-defined tasks to a smaller open-source model you host yourself directly cuts reliance on the expensive API for those cases."},
+  ]
+},
+{
+  num:176, marks:3, type:"MSQ", topic:"Observability in a locked-down environment",
+  question:"At a bank, ML serving is on internal-only commodity Linux servers with no containers, no cloud connectivity, and Prometheus already in place for metrics. What is the minimum additional data needed for effective troubleshooting and governance?",
+  options:[
+    {t:"Logs from the ML serving servers are needed to get detailed records of model executions.", c:true},
+    {t:"CPU and GPU utilization are needed to know model efficiency and scalability.", c:false},
+    {t:"Tracing across the various servers is needed for effective debugging across dependent services end-to-end.", c:true},
+    {t:"Kubernetes logs are required to be collected to enable detailed troubleshooting.", c:false},
+    {t:"Metrics for every external requestor (e.g. queries per source IP address per minute) are needed to assess security-related abuse.", c:false},
+    {t:"Kernel logs are necessary to debug security loopholes in the Linux machines.", c:false},
+  ],
+  simple:"The question asks for the minimum extra data needed, given metrics are already covered by Prometheus. What's missing is detailed logs of what each model execution actually did, and end-to-end tracing so you can follow a request across the different servers involved. Things like Kubernetes logs or per-external-IP metrics don't apply here — there's no Kubernetes and no external traffic in this walled-garden setup — and kernel-level logs are overkill for this ask.",
+  why:[
+    {good:true, t:"Logs give you the detailed record of what happened during each model run — something metrics alone don't capture."},
+    {good:false, t:"Metrics like CPU/GPU utilization are already covered by the existing Prometheus setup, so they're not part of the 'additional' minimum needed."},
+    {good:true, t:"Since a single user request may touch multiple internal servers, tracing is what lets you follow it end-to-end and pinpoint where things went wrong."},
+    {good:false, t:"There's no Kubernetes in this environment (plain commodity Linux servers, no containers), so k8s logs don't apply."},
+    {good:false, t:"This is an internal-only walled garden with no external requestors, so per-external-IP abuse metrics aren't relevant here."},
+    {good:false, t:"Kernel-level logging is a much deeper, more specialized ask than what's needed for routine ML troubleshooting and governance."},
+  ]
+},
+{
+  num:177, marks:3, type:"MSQ", topic:"CI/CD anti-patterns for classical ML",
+  question:"Which of the following steps is NOT recommended in a CI/CD approach for classical ML models? (I. Git-flow & \"Deploy Model\" patterns · II. Repo + CML/MLflow tooling · III. Commit in feature branch · IV. Automated approval feature→develop · V. CD to staging after merge · VI. Auto-measure performance on staging · VII. CI on PR to main/release · VIII. Manual approval to merge with main · IX. CD to train new model in prod env · X. Promote trained model directly to production usage.)",
+  options:[
+    {t:"I", c:true},
+    {t:"II", c:false},
+    {t:"III", c:false},
+    {t:"IV", c:true},
+    {t:"V", c:false},
+    {t:"VI", c:false},
+    {t:"VII", c:false},
+    {t:"VIII", c:false},
+    {t:"IX", c:false},
+    {t:"X", c:true},
+  ],
+  simple:"Two of the flagged steps break a basic safety rule: approving a merge automatically with no human check (IV), and pushing a freshly trained model straight into production with no validation gate (X) — both skip the review step that catches problems before they reach real users. Treating an ML deployment purely as a plain code git-flow, without separately tracking the model's own lifecycle (I), also misses that models need their own versioning and validation on top of the code's. Everything else in the list — feature branches, CI on PRs, staging validation, manual approval before main, tooling like CML/MLflow — are solid, recommended practices.",
+  why:[
+    {good:true, t:"Treating model deployment as just another code git-flow ignores that a trained model needs its own tracking and validation, separate from the code."},
+    {good:false, t:"Using a repo plus CML/MLflow for experiment tracking and reporting is standard, recommended tooling."},
+    {good:false, t:"Committing work in a feature branch before merging is basic, healthy git hygiene."},
+    {good:true, t:"Auto-approving a merge with no human review removes the safety check that catches mistakes before they spread."},
+    {good:false, t:"Deploying to a staging environment after merging is exactly the safe, gradual rollout pattern you want."},
+    {good:false, t:"Automatically measuring performance on staging before going further is a sound validation step."},
+    {good:false, t:"Running CI checks when a PR is raised against main/release is a core, recommended CI practice."},
+    {good:false, t:"A manual approval gate before merging into main is a healthy safeguard, not an anti-pattern."},
+    {good:false, t:"Training a new model in a controlled CD pipeline step, rather than by hand, is a recommended automation practice."},
+    {good:true, t:"Pushing a newly trained model straight to production, with no staging or validation step, skips the safety check that catches a bad model before it affects users."},
+  ]
+},
+{
+  num:178, marks:3, type:"MSQ", topic:"Adopting Git-flow",
+  question:"Currently: everything is coded directly on the \"main\" branch and pushed to remote. What changes would you introduce to make this follow the Git-flow model for CI/CD?",
+  options:[
+    {t:"Use a \"develop\" branch separate from \"main\" to separate new development from code that is live in production.", c:true},
+    {t:"Do not push to remote from local until a pull request is raised and approved.", c:false},
+    {t:"Only code critical bug fixes directly in \"main\", not new features.", c:false},
+    {t:"Use tags for each new version of the code in \"main\".", c:true},
+    {t:"Create a separate branch for each feature, and once successfully implemented and tested, merge into \"develop\" using a pull request.", c:true},
+  ],
+  simple:"Git-flow's whole point is separating 'what's live' from 'what's being built next'. So you introduce a develop branch to hold work-in-progress, give each feature its own branch that merges into develop through a reviewed pull request, and tag each release that actually reaches main so you always know exactly what version is live. Blocking every local push until a PR is approved is stricter than Git-flow actually requires, and coding bug fixes directly into main still bypasses review — a proper hotfix in Git-flow still gets its own short-lived branch.",
+  why:[
+    {good:true, t:"Splitting 'main' (what's live) from 'develop' (what's being integrated) is the foundational idea of Git-flow."},
+    {good:false, t:"This describes a stricter push policy than Git-flow itself requires — it's about review gates on merges, not blanket restrictions on local pushes."},
+    {good:false, t:"Even urgent fixes in Git-flow go through their own short-lived hotfix branch and review, rather than being coded directly into main."},
+    {good:true, t:"Tagging each release on main gives you a clear, permanent marker of exactly which version is running in production."},
+    {good:true, t:"A dedicated branch per feature, merged into develop via a reviewed pull request once it's tested, is the core Git-flow feature workflow."},
+  ]
+},
+{
+  num:179, marks:3, type:"MSQ", topic:"Quick, pragmatic forecasting fix",
+  question:"Management manually extrapolates quarterly revenue from monthly numbers in Excel, with poor results — sales and finance disagree on the numbers and the \"truth\" is somewhere in between. You need to solve this quickly and efficiently. Which activities constitute your strategy?",
+  options:[
+    {t:"Use a PyTorch-based deep learning model for programmatic forecasting instead of manual extrapolations.", c:false},
+    {t:"Use one of the available forecasting functions within Excel instead of manual extrapolations.", c:true},
+    {t:"Feed the forecast directly with data from both sales and finance teams.", c:false},
+    {t:"Compute a common set of features that both sales and finance teams agree on, including and especially \"revenue\", using Feast and then feed into the forecast", c:true},
+  ],
+  simple:"The real problem here isn't that the forecasting math is too weak — it's that sales and finance don't even agree on what 'revenue' means. A deep learning model won't fix a disagreement about definitions, and it's overkill for a quick fix. The pragmatic path is: swap manual guesswork for Excel's built-in forecasting functions (fast, no new infrastructure), but first agree on a single, shared definition of the key numbers (like 'revenue') so both teams are feeding the forecast the same trusted inputs.",
+  why:[
+    {good:false, t:"A deep learning model is heavy machinery for a problem that isn't about better math — it's about mismatched inputs, and it's far from a 'quick and efficient' fix."},
+    {good:true, t:"Excel's own forecasting functions are a fast, low-effort upgrade over pure manual extrapolation — proportionate to the problem."},
+    {good:false, t:"Feeding in two disagreeing datasets as-is just bakes the disagreement into the forecast rather than resolving it."},
+    {good:true, t:"Agreeing on one shared, well-defined set of features (especially what 'revenue' means) fixes the root cause — inconsistent definitions — before the numbers ever reach the forecast."},
+  ]
+},
+{
+  num:180, marks:3, type:"MCQ", topic:"Logging the experimentation process",
+  question:"Your business leader has approved productionizing your model. Which step ensures the way you arrived at your final model is logged, so future data scientists know why you rejected some model types and hyperparameter values?",
+  options:[
+    {t:"Configure a central MLflow server, and use that MLflow for tracking every experiment and for hyperparameter tuning.", c:true},
+    {t:"Use logging through Python print commands and rely on container log collection of GCP.", c:false},
+    {t:"Use sklearn's automl so that you don't have to go through various model types or hyperparameter values in the first place.", c:false},
+    {t:"Create a Github repo for the code, push to the repo for each code change you produce due to a model change or hyperparameter value change, and use CML for logging model metrics.", c:false},
+    {t:"Containerize your model using docker and run the container using k8s leveraging GKE, which brings all necessary logging in production.", c:false},
+  ],
+  simple:"You want a structured, searchable record of every experiment you tried — what model, what settings, what result — so someone later can see exactly why you picked what you picked. A dedicated experiment-tracking tool like a central MLflow server is purpose-built for exactly this. Print statements scattered in logs are unstructured and easy to lose, skipping the exploration entirely with AutoML defeats the point of understanding why choices were made, git commits track code changes (not experiment results), and container/k8s logging is about production runtime, not experiment history.",
+  why:[
+    {good:true, t:"A central MLflow server is built specifically to record every experiment's parameters, metrics, and outcomes in one searchable place."},
+    {good:false, t:"Print statements scattered through code and generic log collection give you an unstructured trail that's hard to search or compare across experiments."},
+    {good:false, t:"AutoML skips the manual exploration entirely, so there's no record of 'why we rejected X' because that reasoning never gets surfaced to you."},
+    {good:false, t:"Git tracks changes to code, not the actual results and comparisons of experiments — it's a partial, indirect substitute for a real experiment tracker."},
+    {good:false, t:"Container and k8s logging captures what happens when the model runs in production, not the history of experimentation that led to choosing it."},
+  ]
+},
+{
+  num:181, marks:4, type:"MSQ", topic:"When an LLM launch goes wrong",
+  question:"An entrepreneur built an LLM (Gemma2-9B base, lightly finetuned on ~1000 hand-engineered samples, backed by a RAG database of daily scraped Reddit/X news) launched on WhatsApp with minimal infra. What problems did consumers encounter in the first month?",
+  options:[
+    {t:"The LLM performance at the end of the month was very bad as it could not search through the daily news documents collected in the RAG database.", c:false},
+    {t:"The LLM hallucinated since there was no data curation in the pretraining, finetuning or in the RAG.", c:true},
+    {t:"Along with news, the LLM started giving misinformed opinions that were at times actively toxic since there was no screening for the data being ingested from the sources.", c:true},
+    {t:"The LLM became stale since it was built using older data while the latest news did not get added to the model itself but was only usable by retrieval.", c:false},
+    {t:"The LLM kept crashing intermittently without giving a response due to lack of batching, underprovisioned resources, and inefficient resource usage in the face of significant interest from consumers.", c:true},
+  ],
+  simple:"Skipping data curation at every stage — raw scraped social media for pretraining, only 1000 hand-written examples for finetuning, and unfiltered daily scrapes into the RAG database — means the model has no filter for truth or toxicity, so it hallucinates and can even repeat toxic, unverified opinions straight from the internet. Separately, running a popular chatbot on 'assignment-sized' infrastructure with no batching or scaling means it simply falls over under real user load. The RAG retrieval mechanism itself wasn't the failure point — that's designed to keep answers reasonably current, so 'staleness' and 'RAG search breaking' aren't the headline problems here.",
+  why:[
+    {good:false, t:"The RAG search mechanism itself was set up to work — the actual reported problems are hallucination, toxicity, and crashes, not search failing to function."},
+    {good:true, t:"Feeding a model uncurated raw internet text at every stage — pretraining, finetuning, and retrieval — gives it no grounding in what's true, which is a recipe for hallucination."},
+    {good:true, t:"Scraping raw, unscreened social media content means whatever toxic or misinformed opinions exist online can get reflected straight back by the model."},
+    {good:false, t:"The RAG pipeline was specifically built to surface the latest daily news via retrieval, so staleness isn't the described failure — the model didn't need the news baked into its weights."},
+    {good:true, t:"Deploying on infrastructure sized for a course assignment, with no batching or scaling, means a sudden wave of real users will overwhelm it and cause crashes."},
+  ]
+},
+{
+  num:182, marks:4, type:"MSQ", topic:"Enterprise data security risks",
+  question:"As Chief Data Officer, you're asked to minimize security risks in a data estate where many sources feed a central data lake, from which custom pipelines build ML models. Which risks are worth calling out?",
+  options:[
+    {t:"Data cannot be trusted unless provenance and data lineage back to the source is established by the data lake. This helps minimize the risks of data poisoning.", c:true},
+    {t:"Each custom pipeline building its own ML model introduces security risks in feature engineering code. Centralizing all features into a single feature store will minimize code-level risks.", c:true},
+    {t:"The data lake cannot be trusted to deliver the right data at the right time, so extending the custom ML pipelines all the way back to source (each model controlling its own source extraction) ensures full traceability.", c:false},
+    {t:"Drift in data would mean models become outdated, so encouraging retraining models is best to minimize the risk of model irrelevance.", c:false},
+    {t:"ML models are artifacts that need protection. Encrypt them and store in secure model registries.", c:true},
+    {t:"Gatekeep the model serving infrastructure to minimize risks from probing and leakage through repetitive use.", c:true},
+  ],
+  simple:"Good security here means centralizing and controlling things, not scattering them. Track where every bit of data came from (lineage) so you can trust it hasn't been tampered with, put feature logic in one shared, audited feature store instead of many one-off pipelines, encrypt trained models like the valuable assets they are, and lock down access to the serving system so outsiders can't repeatedly probe it to steal information. Letting every individual pipeline reach directly back to raw sources on its own actually multiplies the attack surface rather than reducing it, and 'just retrain more often' addresses staleness, not security.",
+  why:[
+    {good:true, t:"Being able to trace data back to its source is exactly what lets you catch and reject tampered or poisoned data before it reaches a model."},
+    {good:true, t:"When every team writes its own feature engineering code, mistakes and vulnerabilities multiply — a shared, audited feature store shrinks that surface area."},
+    {good:false, t:"Letting every custom pipeline bypass the data lake and pull straight from raw sources multiplies the number of unmonitored access points — the opposite of reducing risk."},
+    {good:false, t:"Retraining more often addresses a model going stale or losing accuracy over time — that's a performance concern, not a security risk."},
+    {good:true, t:"A trained model is valuable and can itself be stolen or tampered with, so encrypting it and storing it in a proper registry protects that asset."},
+    {good:true, t:"Restricting who can repeatedly query the live model prevents attackers from probing it to extract training data or steal its behaviour."},
+  ]
+},
+{
+  num:183, marks:4, type:"MSQ", topic:"Moving batch inference to real time",
+  question:"A rental-listings fraud model currently runs as a nightly batch job via joblib in a Jupyter notebook on an 8-CPU server. Listings now arrive 1/second, and the company wants a fraudulent listing flagged within 5 minutes of posting. What changes are necessary?",
+  options:[
+    {t:"Enable the \"streaming inference\" mode in scikit-learn.", c:false},
+    {t:"Containerize the model using Docker and execute using k8s (Kubernetes).", c:true},
+    {t:"Feed the listings in near-real-time into a message bus like Apache Kafka, develop new stream processing code using Spark Streaming, and invoke the model as an API from within the code.", c:true},
+    {t:"Attach a GPU accelerator to the server for faster processing and switch to using PyTorch.", c:false},
+    {t:"Run the model on the edge by deploying the same Jupyter notebook on the web server where the portal accepts new listings.", c:false},
+  ],
+  simple:"Going from 'check everything once a night' to 'flag within 5 minutes of posting' is an architecture change, not a speed tweak. You need a real streaming pipeline: new listings flow continuously through a message bus (Kafka), get processed as they arrive (Spark Streaming), and call the model as a proper API — all packaged so it can scale reliably (Docker + k8s). A GPU and PyTorch would help if the bottleneck were heavy computation, but this is a lightweight scikit-learn model — the real problem is architecture, not raw compute. And there's no such thing as a built-in 'streaming inference mode' in scikit-learn, nor is copy-pasting the same notebook onto a web server a real production deployment.",
+  why:[
+    {good:false, t:"scikit-learn doesn't have a built-in 'streaming inference' mode — this option describes a feature that doesn't exist."},
+    {good:true, t:"Containerizing and running on k8s gives you a scalable, resilient way to serve the model continuously rather than as a one-off nightly script."},
+    {good:true, t:"A message bus plus stream processing is exactly the architecture needed to react to each listing as it arrives, instead of waiting for a nightly batch."},
+    {good:false, t:"The model is a lightweight scikit-learn model — the bottleneck is the batch architecture, not raw compute power, so a GPU/PyTorch switch doesn't solve the actual problem."},
+    {good:false, t:"Copy-pasting a notebook onto the web server isn't a real, robust deployment pattern — it doesn't address scaling, reliability, or the batch-vs-stream mismatch."},
+  ]
+},
+{
+  num:184, marks:4, type:"MSQ", topic:"Debugging a broken CI workflow",
+  question:"A newbie sets up CI for a BERT-finetuning project (1M labelled docs, data on a company RHEL server, DVC used locally) with this Github Actions workflow: triggers on every push, runs on ubuntu-latest, trains the model, then creates a CML report and comments it. What problems can you anticipate?",
+  yaml:`name: CML
+on: [push]
+jobs:
+  train_and_report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iterative/setup-cml@v1
+      - uses: actions/checkout@v3
+      - name: Train model
+        run: python train.py
+      - name: Create CML report
+        run: |
+          cat metrics.txt >> report.md
+          cml comment create report.md`,
+  options:[
+    {t:"The CML action will fail because there is no token set to interact with Github.", c:true},
+    {t:"The Github action runner cannot run large workloads, so the step for training the model will run into resource issues and fail.", c:true},
+    {t:"The Github action will fail because the company server's Linux distribution (RHEL) doesn't match the Linux container version specified in the workflow (Ubuntu)", c:false},
+    {t:"Since the Github action is set to trigger on every push, each branch change that is committed will trigger the entire model training thus running into Github free-tier usage limits for the month.", c:true},
+    {t:"Since the Github action is set to trigger on every push, only the merge into the main branch runs the model, thus losing the benefits of doing CI on every change.", c:false},
+    {t:"The Github action doesn't specify any tests to run, so the primary objective of CI is missing.", c:true},
+  ],
+  simple:"This workflow has real problems: posting a CML comment needs a GitHub token that isn't configured here, so that step will fail outright; GitHub's free hosted runners are modest machines, not built for finetuning BERT on a million documents; triggering on every single push means every small commit burns free-tier minutes fast; and nowhere does the workflow actually run any tests — it just trains and reports, missing the whole point of 'continuous integration'. The company's own server OS (RHEL) is irrelevant, because GitHub Actions runs in its own cloud VM, completely separate from that server. And 'on: [push]' really does mean every push, not just merges to main.",
+  why:[
+    {good:true, t:"Commenting back to GitHub via CML requires an authentication token, and none is configured in this workflow, so that step will fail."},
+    {good:true, t:"GitHub's free hosted runners are general-purpose, modest machines — finetuning BERT on a million labelled documents will likely exceed their time and resource limits."},
+    {good:false, t:"GitHub Actions runs the workflow in its own isolated cloud VM (ubuntu-latest) — it has nothing to do with the OS of the company's separate RHEL server, so there's no mismatch to worry about."},
+    {good:true, t:"'on: [push]' fires on every single push to any branch, so frequent small commits will repeatedly trigger full model training and quickly use up free-tier minutes."},
+    {good:false, t:"This is the opposite of what 'on: [push]' does — it triggers on every push, not just merges into main, so this concern doesn't actually apply."},
+    {good:true, t:"The workflow only trains a model and posts a report — it never actually runs any tests, so it's missing CI's core purpose of validating changes."},
+  ]
+},
+];
 
-function parseHash(){
-  const h = new URLSearchParams(location.search);
-  return { p: Number.parseInt(h.get("p") || "1", 10)-1, q: Number.parseInt(h.get("q") || "1", 10)-1 };
-}
-function syncUrl(){
-  const url = new URL(location.href);
-  url.searchParams.set("p", String(state.p + 1));
-  url.searchParams.set("q", String(state.q + 1));
-  history.replaceState({}, "", url);
-}
-function clamp(){
-  if(!state.data.papers.length){state.p=0;state.q=0;return;}
-  state.p = Math.max(0, Math.min(state.p, state.data.papers.length - 1));
-  const qs = state.data.papers[state.p].questions;
-  state.q = Math.max(0, Math.min(state.q, Math.max(0, qs.length - 1)));
-}
-function renderPapers(){
-  paperSel.innerHTML = state.data.papers.map((p,i)=>
-    '<option value="'+i+'">'+p.term+' · '+p.exam+' · '+p.questionCount+' Q</option>'
-  ).join("");
-  paperSel.value = String(state.p);
-}
-function renderIndex(){
-  const paper = state.data.papers[state.p];
-  idxWrap.innerHTML = paper.questions.map((x,i)=>{
-    const active = i===state.q ? " active" : "";
-    return '<a class="qbtn'+active+'" href="?p='+(state.p+1)+'&q='+(i+1)+'">Q'+x.number+'</a>';
-  }).join("");
-}
-function renderQuestion(){
-  const paper = state.data.papers[state.p];
-  const item = paper.questions[state.q];
-  overall.textContent = state.data.paperCount + " papers · " + state.data.totalQuestions + " questions";
-  paperMeta.textContent = paper.title + " · " + paper.term + " · " + paper.exam;
-  qTitle.textContent = "Question " + item.number;
-  const tags = [item.kind, item.marks].filter(Boolean).map(t => '<span class="tag">'+t+'</span>').join("");
-  qTags.innerHTML = tags;
-  content.innerHTML = item.html;
+let current = 0;
+let revealed = false;
 
-  const total = paper.questions.length;
-  const num = state.q + 1;
-  progressText.textContent = num + " / " + total;
-  barFill.style.width = Math.round((num / total) * 100) + "%";
-
-  if (num > 1) {
-    prevBtn.href = '?p='+(state.p+1)+'&q='+(num-1);
-    prevBtn.style.pointerEvents = "";
-    prevBtn.style.opacity = "1";
-  } else {
-    prevBtn.href = '#';
-    prevBtn.style.pointerEvents = "none";
-    prevBtn.style.opacity = ".5";
-  }
-  if (num < total) {
-    nextBtn.textContent = "Next →";
-    nextBtn.href = '?p='+(state.p+1)+'&q='+(num+1);
-    nextBtn.style.pointerEvents = "";
-    nextBtn.style.opacity = "1";
-  } else {
-    nextBtn.textContent = "Paper complete";
-    nextBtn.href = '#';
-    nextBtn.style.pointerEvents = "none";
-    nextBtn.style.opacity = ".8";
-  }
+function optionMarker(o, show){
+  return (show && o.c) ? "✓" : "";
 }
+
+function renderList(){
+  const list = document.getElementById('qlist');
+  list.innerHTML = '';
+  DATA.forEach((q, i) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'qbtn' + (i===current ? ' active' : '');
+    btn.onclick = () => { current = i; revealed = false; render(); document.getElementById('sidebar').classList.remove('open'); window.scrollTo({top:0,behavior:'smooth'}); };
+    btn.innerHTML = `<span class="num">Q${q.num}</span><span class="meta"><span class="topic">${q.topic}</span><span class="type">${q.type} · ${q.marks} marks</span></span>`;
+    li.appendChild(btn);
+    list.appendChild(li);
+  });
+}
+
 function render(){
-  clamp();
-  renderPapers();
-  renderIndex();
-  renderQuestion();
-  syncUrl();
+  const q = DATA[current];
+  const el = document.getElementById('content');
+
+  let optsHtml = q.options.map(o => `
+    <li class="opt ${revealed && o.c ? 'correct':''}">
+      <span class="mark">${optionMarker(o, revealed)}</span>
+      <span>${o.t}</span>
+    </li>`).join('');
+
+  let whyHtml = q.why.map(w => `
+    <div class="why-item ${w.good ? 'good':'bad'}">
+      <span class="dot"></span>
+      <span>${w.t}</span>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="nav nav-top">
+      <button class="navbtn" id="prevBtn">&larr; Previous</button>
+      <button class="navbtn" id="nextBtn">Next &rarr;</button>
+    </div>
+
+    <div class="top-tags">
+      <span class="tag strong">Question ${q.num}</span>
+      <span class="tag">${q.type}</span>
+      <span class="tag">${q.marks} marks</span>
+    </div>
+    <h2 class="qtitle">${q.topic}</h2>
+    <div class="prompt">${q.question}</div>
+    ${q.yaml ? `<div class="yaml">${q.yaml.replace(/</g,'&lt;')}</div>` : ''}
+    <ul class="options">${optsHtml}</ul>
+
+    ${revealed ? `
+    <div class="panel simple">
+      <h3>In plain terms</h3>
+      <p>${q.simple}</p>
+    </div>
+
+    <div class="panel why">
+      <h3>Why each option is right or wrong</h3>
+      ${whyHtml}
+    </div>
+    ` : `
+    <button class="navbtn reveal" id="revealBtn">Show answer &amp; explanation</button>
+    `}
+  `;
+
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === DATA.length - 1;
+  document.getElementById('prevBtn').onclick = () => { if(current>0){current--; revealed=false; render(); window.scrollTo({top:0,behavior:'smooth'});} };
+  document.getElementById('nextBtn').onclick = () => { if(current<DATA.length-1){current++; revealed=false; render(); window.scrollTo({top:0,behavior:'smooth'});} };
+
+  const rb = document.getElementById('revealBtn');
+  if(rb){ rb.onclick = () => { revealed = true; render(); }; }
+
+  renderList();
 }
 
-paperSel.addEventListener("change", (e)=>{
-  state.p = Number.parseInt(e.target.value, 10) || 0;
-  state.q = 0;
-  render();
-});
-
-fetch("./data.json").then(r=>r.json()).then(data=>{
-  state.data = data;
-  const fromUrl = parseHash();
-  state.p = Number.isFinite(fromUrl.p) ? fromUrl.p : 0;
-  state.q = Number.isFinite(fromUrl.q) ? fromUrl.q : 0;
-  render();
-});
+render();
 </script>
 </body>
 </html>

@@ -6,34 +6,125 @@
   <title>Programming in C · Exam Portal</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <style>
-    :root{--bg:#f3f7f7;--card:#fff;--ink:#142523;--muted:#5b6b67;--line:#d4dfdd;--teal:#0e8478}
-    *{box-sizing:border-box} body{margin:0;font:14px/1.5 Inter,system-ui,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at top,#e8faf8,#f3f7f7 42%);color:var(--ink)}
-    .wrap{max-width:1200px;margin:0 auto;padding:18px}
-    .top{display:flex;flex-wrap:wrap;gap:10px;align-items:end;justify-content:space-between;margin-bottom:14px}
-    .title{font-size:clamp(24px,3vw,38px);font-weight:800;line-height:1.05;margin:4px 0}
-    .sub{color:var(--muted)}
-    .pill{display:inline-block;border:1px solid #bde1dd;background:#ecf9f7;color:#0f7268;border-radius:999px;padding:5px 10px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase}
-    .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}}
-    .panel{background:var(--card);border:1px solid var(--line);border-radius:16px}
-    .side{padding:14px;position:sticky;top:12px;max-height:calc(100dvh - 24px);overflow:auto}
-    .main{padding:16px}
-    select{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;font-weight:600}
-    .qidx{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:10px}
-    .qbtn{border:1px solid var(--line);background:#f9fbfb;border-radius:8px;padding:7px 0;text-align:center;font-size:12px;font-weight:700;color:var(--muted);text-decoration:none}
-    .qbtn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--ink);text-decoration:none}
-    .btn.next{background:var(--teal);border-color:var(--teal);color:#fff}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-    .tag{border:1px solid var(--line);background:#f7fbfa;color:var(--muted);border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700}
-    .bar{height:8px;background:#edf3f2;border-radius:999px;overflow:hidden;margin-top:8px}
-    .bar > div{height:100%;background:var(--teal)}
-    .prose h1,.prose h2,.prose h3,.prose h4{margin:.8rem 0 .4rem;font-size:1rem}
-    .prose p{margin:.45rem 0} .prose ul,.prose ol{padding-left:1.15rem} .prose table{display:block;overflow:auto;border-collapse:collapse}
-    .prose td,.prose th{border:1px solid var(--line);padding:4px 8px}
-    .prose pre{background:#f4f7f7;padding:10px;border-radius:10px;overflow:auto}
-    .prose blockquote{border-left:3px solid var(--line);margin:.65rem 0;padding-left:.7rem;color:var(--muted)}
+    :root{
+      --bg:#f4f7f7;
+      --card:#ffffff;
+      --ink:#142424;
+      --muted:#596d68;
+      --line:#dde8e5;
+      --teal:#0e8478;
+      --teal-dark:#0a6358;
+      --teal-soft:#e9f4f1;
+      --amber:#c08b1f;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font:15px/1.65 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:
+        radial-gradient(circle at top right, #e0f2e9 0, transparent 40%),
+        radial-gradient(circle at bottom left, #f0f5f2 0, transparent 45%),
+        var(--bg);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+
+    /* ---------- Header ---------- */
+    .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .pill{display:inline-block;background:var(--teal-soft);color:var(--teal-dark);border:1px solid #cce6d8;border-radius:999px;padding:6px 14px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+    .title{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-.02em;margin:2px 0 0;line-height:1.1}
+    .sub{color:var(--muted);font-size:13px}
+
+    .paper-bar{display:flex;flex-direction:column;gap:6px;min-width:220px;flex:0 1 300px}
+    .paper-label{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    select{
+      width:100%;border:1px solid var(--line);background:var(--card);border-radius:12px;
+      padding:12px 14px;font:600 14px/1.3 Inter,system-ui,Segoe UI,Roboto,sans-serif;color:var(--ink);
+      cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230e8478' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    select:hover{border-color:var(--teal)}
+    select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,132,120,.15)}
+
+    /* ---------- Progress ---------- */
+    .progress-row{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+    .progress-track{flex:1;height:6px;background:#e3ece8;border-radius:999px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),#16a085);border-radius:999px;transition:width .3s ease}
+    .progress-text{font:700 13px/1 ui-monospace,Menlo,monospace;color:var(--teal-dark);white-space:nowrap}
+
+    /* ---------- Question Card ---------- */
+    .question-card{
+      background:var(--card);border:1px solid var(--line);border-radius:20px;
+      box-shadow:0 12px 40px -18px rgba(20,36,36,.18);
+      padding:clamp(24px,4vw,48px);
+      max-width:780px;margin:0 auto;
+    }
+    .q-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .q-meta{color:var(--muted);font-size:13px;margin-bottom:6px}
+    .q-title{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.01em;margin:0;line-height:1.2}
+    .q-tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{display:inline-block;background:var(--teal-soft);color:var(--teal-dark);border:1px solid #cce6d8;border-radius:999px;padding:4px 12px;font:700 12px/1.4 Inter,system-ui,Segoe UI,Roboto,sans-serif}
+    .tag.marks{background:#fdf3e0;color:var(--amber);border-color:#f0ddb8}
+
+    /* ---------- Content ---------- */
+    .prose{font-size:16px}
+    .prose h1,.prose h2,.prose h3,.prose h4{margin:1.2em 0 .4em;font-weight:700;letter-spacing:-.01em}
+    .prose h1{font-size:1.4em}
+    .prose h2{font-size:1.15em}
+    .prose p{margin:.7em 0}
+    .prose ul,.prose ol{padding-left:1.4em;margin:.7em 0}
+    .prose li{margin:.3em 0}
+    .prose table{display:block;overflow-x:auto;border-collapse:collapse;margin:1em 0;width:100%}
+    .prose td,.prose th{border:1px solid var(--line);padding:8px 12px;font-size:.92em}
+    .prose pre{background:#12211e;color:#d9efe9;padding:14px 16px;border-radius:12px;overflow-x:auto;font:13px/1.6 ui-monospace,Menlo,monospace}
+    .prose blockquote{border-left:3px solid var(--teal);margin:1em 0;padding:6px 16px;color:var(--muted);background:var(--teal-soft);border-radius:0 10px 10px 0}
+    .prose img{max-width:100%;height:auto}
+    .prose code{background:#eff3f1;padding:2px 6px;border-radius:6px;font:13px ui-monospace,Menlo,monospace}
+    .prose pre code{background:transparent;padding:0}
+
+    /* ---------- Navigation ---------- */
+    .actions{display:flex;gap:12px;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:12px;
+      padding:12px 20px;font:700 14px/1 Inter,system-ui,Segoe UI,Roboto,sans-serif;cursor:pointer;
+      transition:transform .15s ease, box-shadow .2s, opacity .2s;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .btn.prev{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+    .btn.prev:hover{border-color:var(--teal);color:var(--teal)}
+    .btn.next{background:var(--teal);border:1px solid var(--teal);color:#fff;box-shadow:0 6px 16px -6px rgba(14,132,120,.5)}
+    .btn.next:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+
+    /* ---------- Question Index Strip ---------- */
+    .index-bar{max-width:780px;margin:20px auto 0}
+    .index-label{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .qidx{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin;scrollbar-color:var(--teal) transparent}
+    .qbtn{
+      display:flex;align-items:center;justify-content:center;min-width:52px;height:52px;flex:0 0 auto;
+      border:1px solid var(--line);background:var(--card);border-radius:12px;text-decoration:none;
+      font:700 14px/1 ui-monospace,Menlo,monospace;color:var(--muted);
+      transition:all .15s ease;cursor:pointer;
+    }
+    .qbtn:hover{border-color:var(--teal);color:var(--teal)}
+    .qbtn.active{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 4px 12px -4px rgba(14,132,120,.5)}
+
+    /* ---------- Mobile ---------- */
+    @media (max-width:640px){
+      .wrap{padding:20px 14px 40px}
+      .question-card{padding:22px 16px;border-radius:16px}
+      .q-head{flex-direction:column;gap:10px}
+      .actions{margin-top:24px;padding-top:18px}
+      .btn{flex:1;justify-content:center;padding:13px 12px}
+      .progress-row{margin-bottom:16px}
+      .qidx{gap:6px}
+      .qbtn{min-width:44px;height:44px;font-size:13px}
+    }
   </style>
 </head>
 <body>
@@ -44,31 +135,35 @@
         <h1 class="title">Programming in C</h1>
         <div class="sub" id="overall"></div>
       </div>
-    </div>
-    <div class="grid">
-      <aside class="panel side">
-        <div style="font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Paper</div>
+      <div class="paper-bar">
+        <span class="paper-label">Select Paper</span>
         <select id="paper"></select>
-        <div style="margin-top:10px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Progress</div>
-        <div id="progressText" class="sub" style="margin-top:4px"></div>
-        <div class="bar"><div id="barFill" style="width:0%"></div></div>
-        <div style="margin-top:12px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)">Question Index</div>
-        <div class="qidx" id="index"></div>
-      </aside>
-      <main class="panel main">
-        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-          <div>
-            <div id="paperMeta" class="sub"></div>
-            <h2 id="qTitle" style="margin:4px 0 0;font-size:28px;line-height:1.05"></h2>
-            <div class="meta" id="qTags"></div>
-          </div>
-          <div class="actions">
-            <a id="prevBtn" class="btn" href="#">← Previous</a>
-            <a id="nextBtn" class="btn next" href="#">Next →</a>
-          </div>
+      </div>
+    </div>
+
+    <div class="progress-row">
+      <div class="progress-track"><div id="barFill" style="width:0%"></div></div>
+      <span id="progressText" class="progress-text"></span>
+    </div>
+
+    <article class="question-card">
+      <div class="q-head">
+        <div>
+          <div id="paperMeta" class="q-meta"></div>
+          <h2 id="qTitle" class="q-title"></h2>
         </div>
-        <article id="content" class="prose" style="margin-top:12px"></article>
-      </main>
+        <div class="q-tags" id="qTags"></div>
+      </div>
+      <div id="content" class="prose"></div>
+      <div class="actions">
+        <a id="prevBtn" class="btn prev" href="#" aria-label="Previous question">← Previous</a>
+        <a id="nextBtn" class="btn next" href="#" aria-label="Next question">Next →</a>
+      </div>
+    </article>
+
+    <div class="index-bar">
+      <div class="index-label">Question Index</div>
+      <div class="qidx" id="index"></div>
     </div>
   </div>
 <script>
@@ -104,7 +199,7 @@ function renderIndex(){
   const paper = state.data.papers[state.p];
   idxWrap.innerHTML = paper.questions.map((x,i)=>{
     const active = i===state.q ? " active" : "";
-    return '<a class="qbtn'+active+'" href="?p='+(state.p+1)+'&q='+(i+1)+'">Q'+x.number+'</a>';
+    return '<a class="qbtn'+active+'" href="?p='+(state.p+1)+'&q='+(i+1)+'" aria-label="Question '+x.number+'">Q'+x.number+'</a>';
   }).join("");
 }
 function renderQuestion(){
@@ -113,7 +208,7 @@ function renderQuestion(){
   overall.textContent = state.data.paperCount + " papers · " + state.data.totalQuestions + " questions";
   paperMeta.textContent = paper.title + " · " + paper.term + " · " + paper.exam;
   qTitle.textContent = "Question " + item.number;
-  const tags = [item.kind, item.marks].filter(Boolean).map(t => '<span class="tag">'+t+'</span>').join("");
+  const tags = [item.kind, item.marks].filter(Boolean).map(t => '<span class="tag'+(t===item.marks?' marks':'')+'">'+t+'</span>').join("");
   qTags.innerHTML = tags;
   content.innerHTML = item.html;
 
@@ -124,23 +219,19 @@ function renderQuestion(){
 
   if (num > 1) {
     prevBtn.href = '?p='+(state.p+1)+'&q='+(num-1);
-    prevBtn.style.pointerEvents = "";
-    prevBtn.style.opacity = "1";
+    prevBtn.disabled = false;
   } else {
     prevBtn.href = '#';
-    prevBtn.style.pointerEvents = "none";
-    prevBtn.style.opacity = ".5";
+    prevBtn.disabled = true;
   }
   if (num < total) {
     nextBtn.textContent = "Next →";
     nextBtn.href = '?p='+(state.p+1)+'&q='+(num+1);
-    nextBtn.style.pointerEvents = "";
-    nextBtn.style.opacity = "1";
+    nextBtn.disabled = false;
   } else {
-    nextBtn.textContent = "Paper complete";
+    nextBtn.textContent = "✓ Complete";
     nextBtn.href = '#';
-    nextBtn.style.pointerEvents = "none";
-    nextBtn.style.opacity = ".8";
+    nextBtn.disabled = true;
   }
 }
 function render(){
@@ -163,6 +254,8 @@ fetch("./data.json").then(r=>r.json()).then(data=>{
   state.p = Number.isFinite(fromUrl.p) ? fromUrl.p : 0;
   state.q = Number.isFinite(fromUrl.q) ? fromUrl.q : 0;
   render();
+}).catch(err=>{
+  content.textContent = "Could not load question data. Please check your connection and refresh.";
 });
 </script>
 </body>
